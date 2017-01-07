@@ -1,0 +1,31 @@
+Source: awesome
+Maintainer: elwood <elwood.su@gmail.com>
+Section: x11
+Build-Depends: debhelper (>= 9)
+
+Package: awesome
+Version: 4.0.0-0~trusty0
+Architecture: amd64
+Maintainer: elwood <elwood.su@gmail.com>
+Depends: libc6 (>= 2.14), libcairo2 (>= 1.12.0), libdbus-1-3 (>= 1.0.2), libgdk-pixbuf2.0-0 (>= 2.22.0), libglib2.0-0 (>= 2.30.0), liblua5.1-0, libstartup-notification0 (>= 0.10), libx11-6, libxcb-cursor0 (>= 0.0.99), libxcb-icccm4 (>= 0.4.1), libxcb-keysyms1 (>= 0.3.9), libxcb-randr0 (>= 1.1), libxcb-shape0, libxcb-util0 (>= 0.3.8), libxcb-xinerama0, libxcb-xtest0, libxcb1, libxdg-basedir1, menu, dbus-x11, lua-lgi (>= 0.7.0), gir1.2-freedesktop, gir1.2-pango-1.0
+Recommends: x11-xserver-utils, rlwrap, feh
+Provides: x-window-manager
+Section: x11
+Priority: optional
+Homepage: http://awesome.naquadah.org
+Package-List: awesome
+Description: highly configurable X window manager
+ awesome manages windows dynamically in floating or tiled layouts. It is
+ primarily targeted at power users, developers, and all those dealing with
+ everyday computing tasks and looking for fine-grained control over their
+ graphical environment.
+ .
+ It is highly extensible and scriptable via the Lua programming language,
+ providing an easy-to-use and very well documented API to configure its
+ behavior.
+ .
+ awesome uses tags instead of workspaces, which gives better flexibility
+ in displaying windows, and can be entirely keyboard-driven, not needing a
+ mouse. It also supports multi-headed configurations; uses XCB instead of
+ Xlib for better performance; implements many freedesktop standards; and
+ can be controlled over D-Bus from awesome-client.

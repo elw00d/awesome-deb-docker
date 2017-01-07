@@ -1,0 +1,36 @@
+#!/usr/bin/make -f
+
+package=awesome
+export DH_OPTIONS=-Pdebian/$(package)
+
+build:
+	dh_testdir
+
+override_dh_usrlocal:
+	echo Skipping usr/local
+
+clean:
+	dh_testroot
+	dh_testdir
+	rm -rf debian/$(package)
+	dh_clean
+
+binary-indep: build
+
+binary-arch: build
+
+binary: binary-indep binary-arch
+	dh_testroot
+	dh_testdir
+	dh_installdirs
+	cp -R -T -f ./contents debian/$(package)
+	dh_install --sourcedir=debian/$(package)
+	dh_link
+	dh_installdeb
+	dh_gencontrol
+	dh_fixperms
+	dh_md5sums
+	dh_builddeb
+	dh_installcron
+
+.PHONY: binary binary-arch binary-indep clean

@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+# Automatically added by dh_installmenu
+inst=/etc/menu-methods/awesome
+if [ -f $inst ]; then
+	chmod a+x $inst
+	if [ -x "`which update-menus 2>/dev/null`" ]; then
+		update-menus
+	fi
+fi
+# End automatically added section
+# Automatically added by dh_installwm
+if [ "$1" = "configure" ]; then
+	update-alternatives --install /usr/bin/x-window-manager \
+		x-window-manager /usr/bin/awesome 20 \
+		--slave /usr/share/man/man1/x-window-manager.1.gz \
+		x-window-manager.1.gz /usr/share/man/man1/awesome.1.gz
+fi
+# End automatically added section

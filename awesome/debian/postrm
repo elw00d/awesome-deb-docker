@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "purge" ]
+then
+    rm -f /etc/xdg/awesome/debian/menu.lua
+    rmdir /etc/xdg/awesome/debian
+fi
+
+# Automatically added by dh_installmenu
+inst=/etc/menu-methods/awesome
+if [ "$1" = "remove" ] && [ -f "$inst" ]; then chmod a-x $inst ; fi
+if [ -x "`which update-menus 2>/dev/null`" ]; then update-menus ; fi
+# End automatically added section
+
