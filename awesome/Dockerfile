@@ -76,7 +76,22 @@ RUN cd /root && \
     cd awesome-4.0 && \
     make package
 
+RUN apt-get -y install devscripts
+COPY contents /root/awesome-deb/contents/
+COPY debian /root/awesome-deb/debian/
 RUN cd /root/awesome-4.0/ && \
     cd $(find -iname '.build*') && \
-    dpkg-deb -x ./awesome-4.0.0.0-Linux.deb ./wrong-deb && \
+    dpkg-deb -x ./awesome-4.0.0.0-Linux.deb /root/wrong-deb && \
+    cd /root/awesome-deb && \
+    cp -r /root/wrong-deb/usr/local/etc/* ./contents/etc/ && \
+    mkdir ./contents/usr/bin && \
+    cp -r /root/wrong-deb/usr/bin/* ./contents/usr/bin/ && \
+    mkdir ./contents/usr/lib && \
+    cp -r /root/xcb-util-xrm/.libs/* ./contents/usr/lib/ && \
+    mkdir ./contents/usr/local && \
+    cp -r /root/wrong-deb/usr/local/share ./contents/usr/local/ && \
+    debuild -uc -us
 
+# After that you can use
+# docker cp {container_id}:/root/awesome_4.0.0-4~trusty0_amd64.deb .
+# sudo dpkg -i ./awesome_4.0.0-4~trusty0_amd64.deb
