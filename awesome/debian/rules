@@ -6,9 +6,6 @@ export DH_OPTIONS=-Pdebian/$(package)
 build:
 	dh_testdir
 
-override_dh_usrlocal:
-	echo Skipping usr/local
-
 clean:
 	dh_testroot
 	dh_testdir

@@ -1,6 +1,5 @@
 FROM ubuntu:trusty
 
-# TODO : check if libgtk2.0-dev is necessary
 RUN apt-get update && \
     apt-get install -y git wget gcc g++ && \
     apt-get install -y autoconf autogen automake && \
