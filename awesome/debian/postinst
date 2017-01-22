@@ -17,3 +17,8 @@ if [ "$1" = "configure" ]; then
 		x-window-manager.1.gz /usr/share/man/man1/awesome.1.gz
 fi
 # End automatically added section
+
+# Create symlink to libxcb-util.so.1
+if [ ! -f /usr/lib/x86_64-linux-gnu/libxcb-util.so.0 ]; then
+    ln -s /usr/lib/x86_64-linux-gnu/libxcb-util.so.1 /usr/lib/x86_64-linux-gnu/libxcb-util.so.0
+fi

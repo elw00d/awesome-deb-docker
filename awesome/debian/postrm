@@ -14,3 +14,7 @@ if [ "$1" = "remove" ] && [ -f "$inst" ]; then chmod a-x $inst ; fi
 if [ -x "`which update-menus 2>/dev/null`" ]; then update-menus ; fi
 # End automatically added section
 
+# Remove the symlink
+if [ -L /usr/lib/x86_64-linux-gnu/libxcb-util.so.0 ]; then
+    rm /usr/lib/x86_64-linux-gnu/libxcb-util.so.0
+fi

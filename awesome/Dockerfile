@@ -92,5 +92,6 @@ RUN cd /root/awesome-4.0/ && \
     debuild -uc -us
 
 # After that you can use
-# docker cp {container_id}:/root/awesome_4.0.0-4~trusty0_amd64.deb .
-# sudo dpkg -i ./awesome_4.0.0-4~trusty0_amd64.deb
+# docker cp {container_id}:/root/awesome_4.0.0-0~xenial0_amd64.deb .
+# sudo dpkg -i ./awesome_4.0.0-0~xenial0_amd64.deb
+# sudo apt-get -f install
