@@ -1,5 +1,7 @@
 ## awesome 4.0 deb package for Ubuntu 14.04
 
+![Screenshot](/screenshot.png?raw=true "Screenshot")
+
 This is the Dockerfile that can be used to build the deb package for *Ubuntu 14.04*.
 
 To get a `deb` file just execute next commands:
