@@ -20,4 +20,4 @@ sudo apt-get -f install  # To install missing dependencies (dpkg doesn't install
 
 Tested with clean installation of Ubuntu 14.04 Trusty
 
-Ubuntu 16.04 is supported too, checkout the branch `ubuntu-16.04`
+Ubuntu 16.04 is supported too, checkout the branch [ubuntu-16.04](https://github.com/elw00d/awesome-deb-docker/tree/ubuntu-16.04)
