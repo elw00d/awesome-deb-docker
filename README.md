@@ -20,4 +20,4 @@ sudo apt-get -f install  # To install missing dependencies (dpkg doesn't install
 
 Tested with clean installation of Ubuntu 16.04 Xenial
 
-Ubuntu 14.04 is supported too, checkout the branch `ubuntu-14.04`
+Ubuntu 14.04 is supported too, checkout the branch [ubuntu-14.04](https://github.com/elw00d/awesome-deb-docker/tree/ubuntu-14.04)
