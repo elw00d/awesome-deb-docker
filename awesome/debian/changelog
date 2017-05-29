@@ -1,5 +1,5 @@
-awesome (4.0.0-4~trusty0) trusty; urgency=low
+awesome (4.1.0-1~trusty0) trusty; urgency=low
 
-  * Built 4.0 awesome.
+  * Built 4.1 awesome.
 
- -- Igor Kostromin <elwood.su@gmail.com>  Thu, 05 Jan 2017 09:42:23 +0000
+ -- Igor Kostromin <elwood.su@gmail.com>  Wed, 24 May 2017 18:02:43 +0000

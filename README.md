@@ -10,13 +10,13 @@ To get a `deb` file just execute next commands:
 cd awesome
 docker build -t awesome:v1 .
 docker run awesome:v1
-docker cp $(docker ps -a -n=1 -q):/root/awesome_4.0.0-4~trusty0_amd64.deb .
+docker cp $(docker ps -a -n=1 -q):/root/awesome_4.1.0-1~trusty0_amd64.deb .
 ```
 
 Then, to install, execute
 
 ```
-sudo dpkg -i ./awesome_4.0.0-4~trusty0_amd64.deb
+sudo dpkg -i ./awesome_4.1.0-1~trusty0_amd64.deb
 sudo apt-get -f install  # To install missing dependencies (dpkg doesn't install any dependencies)
 ```
 

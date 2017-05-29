@@ -70,17 +70,17 @@ RUN luarocks install ldoc && \
     luarocks install lua-discount
 
 RUN cd /root && \
-    wget https://github.com/awesomeWM/awesome/releases/download/v4.0/awesome-4.0.tar.xz && \
-    tar xvf awesome-4.0.tar.xz && \
-    cd awesome-4.0 && \
+    wget https://github.com/awesomeWM/awesome/releases/download/v4.1/awesome-4.1.tar.xz && \
+    tar xvf awesome-4.1.tar.xz && \
+    cd awesome-4.1 && \
     make package
 
 RUN apt-get -y install devscripts
 COPY contents /root/awesome-deb/contents/
 COPY debian /root/awesome-deb/debian/
-RUN cd /root/awesome-4.0/ && \
+RUN cd /root/awesome-4.1/ && \
     cd $(find -iname '.build*') && \
-    dpkg-deb -x ./awesome-4.0.0.0-Linux.deb /root/wrong-deb && \
+    dpkg-deb -x ./awesome-4.1.0.0-Linux.deb /root/wrong-deb && \
     cd /root/awesome-deb && \
     cp -r /root/wrong-deb/usr/local/etc/* ./contents/etc/ && \
     mkdir ./contents/usr/bin && \
@@ -90,7 +90,3 @@ RUN cd /root/awesome-4.0/ && \
     mkdir ./contents/usr/local && \
     cp -r /root/wrong-deb/usr/local/share ./contents/usr/local/ && \
     debuild -uc -us
-
-# After that you can use
-# docker cp {container_id}:/root/awesome_4.0.0-4~trusty0_amd64.deb .
-# sudo dpkg -i ./awesome_4.0.0-4~trusty0_amd64.deb
