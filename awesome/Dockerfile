@@ -71,22 +71,23 @@ RUN luarocks install ldoc && \
 
 RUN cd /root && \
     wget https://github.com/awesomeWM/awesome/releases/download/v4.1/awesome-4.1.tar.xz && \
-    tar xvf awesome-4.1.tar.xz && \
-    cd awesome-4.1 && \
+    tar xvf awesome-4.1.tar.xz
+
+# Patch lgi check (ubuntu 14.04 has only lua-lgi=0.7.2)
+RUN sed -i 's/error("lgi too old, need at least version 0.8.0")/--error("lgi too old, need at least version 0.8.0")/g' /root/awesome-4.1/lib/gears/surface.lua
+
+RUN cd /root/awesome-4.1 && \
     make package
 
-RUN apt-get -y install devscripts
+RUN apt-get update && apt-get -y install devscripts
 COPY contents /root/awesome-deb/contents/
 COPY debian /root/awesome-deb/debian/
+
 RUN cd /root/awesome-4.1/ && \
     cd $(find -iname '.build*') && \
     dpkg-deb -x ./awesome-4.1.0.0-Linux.deb /root/wrong-deb && \
     cd /root/awesome-deb && \
-    cp -r /root/wrong-deb/usr/local/etc/* ./contents/etc/ && \
-    mkdir ./contents/usr/bin && \
-    cp -r /root/wrong-deb/usr/bin/* ./contents/usr/bin/ && \
+    cp -r /root/wrong-deb/* ./contents/ && \
     mkdir ./contents/usr/lib && \
     cp -r /root/xcb-util-xrm/.libs/* ./contents/usr/lib/ && \
-    mkdir ./contents/usr/local && \
-    cp -r /root/wrong-deb/usr/local/share ./contents/usr/local/ && \
     debuild -uc -us

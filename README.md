@@ -1,4 +1,4 @@
-## awesome 4.0 deb package for Ubuntu 14.04
+## awesome 4.1 deb package for Ubuntu 14.04
 
 ![Screenshot](/screenshot.png?raw=true "Screenshot")
 
@@ -8,8 +8,8 @@ To get a `deb` file just execute next commands:
 
 ```
 cd awesome
-docker build -t awesome:v1 .
-docker run awesome:v1
+docker build -t awesome:v4.1 .
+docker run awesome:v4.1
 docker cp $(docker ps -a -n=1 -q):/root/awesome_4.1.0-1~trusty0_amd64.deb .
 ```
 
