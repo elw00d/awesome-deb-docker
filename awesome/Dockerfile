@@ -1,19 +1,9 @@
-FROM ubuntu:trusty
+FROM ubuntu:xenial
 
 RUN apt-get update && \
     apt-get install -y git wget gcc g++ && \
     apt-get install -y autoconf autogen automake && \
-    apt-get install -y libgtk2.0-dev
-
-# awesome needs cmake >= 3.0.0 so we have to use PPA on trusty
-# https://launchpad.net/~george-edison55/+archive/ubuntu/cmake-3.x
-
-# To get add-apt-repository command work
-RUN apt-get install -y software-properties-common python-software-properties
-
-RUN add-apt-repository -y ppa:george-edison55/cmake-3.x && \
-    apt-get update && \
-    apt-get install -y cmake
+    apt-get install -y libgtk2.0-dev cmake
 
 # All next directives are from .travis.yml file in awesome repository
 ENV LUA 5.2
@@ -37,11 +27,14 @@ RUN apt-get install -y dbus-x11 xterm xdotool xterm xvfb
 # Need xorg-macros
 RUN apt-get install -y xutils-dev libtool
 RUN cd /root && \
-    git clone --recursive https://github.com/Airblader/xcb-util-xrm.git && \
+    git clone -b v1.2 --recursive https://github.com/Airblader/xcb-util-xrm.git && \
     cd xcb-util-xrm && \
     ./autogen.sh --prefix=/usr && \
+    # Fix autotools issue "'u' modifier ignored since 'D' is the default"
+    # See https://bugzilla.redhat.com/show_bug.cgi?id=1155273
+    sed -i 's/${AR_FLAGS=cru}/${AR_FLAGS=cr}/g' configure && \
     make && \
-    sudo make install
+    make install
 
 # Install Lua (per env).
 RUN apt-get install -y lib${LUANAME}-dev ${LUANAME}
@@ -53,7 +46,7 @@ RUN cd /root && \
     (cd luarocks-2.3.0 \
       && ./configure --lua-version=$LUA --with-lua-include=${LUAINCLUDE} ${LUAROCKS_ARGS} \
       && make build \
-      && sudo make install)
+      && make install)
 
 # lgi.
 RUN apt-get install -y gir1.2-pango-1.0 libgirepository1.0-dev && \
@@ -70,17 +63,15 @@ RUN luarocks install ldoc && \
     luarocks install lua-discount
 
 RUN cd /root && \
-    wget https://github.com/awesomeWM/awesome/releases/download/v4.0/awesome-4.0.tar.xz && \
-    tar xvf awesome-4.0.tar.xz && \
-    cd awesome-4.0 && \
+    git clone -b v4.2 https://github.com/awesomeWM/awesome.git awesome-4.2/ && \
+    cd awesome-4.2 && \
     make package
 
 RUN apt-get -y install devscripts
 COPY contents /root/awesome-deb/contents/
 COPY debian /root/awesome-deb/debian/
-RUN cd /root/awesome-4.0/ && \
-    cd $(find -iname '.build*') && \
-    dpkg-deb -x ./awesome-4.0.0.0-Linux.deb /root/wrong-deb && \
+RUN cd /root/awesome-4.2/ && \
+    dpkg-deb -x ./build/awesome-4.2.0.0-Linux.deb /root/wrong-deb && \
     cd /root/awesome-deb && \
     cp -r /root/wrong-deb/usr/local/etc/* ./contents/etc/ && \
     mkdir ./contents/usr/bin && \
@@ -90,8 +81,3 @@ RUN cd /root/awesome-4.0/ && \
     mkdir ./contents/usr/local && \
     cp -r /root/wrong-deb/usr/local/share ./contents/usr/local/ && \
     debuild -uc -us
-
-# After that you can use
-# docker cp {container_id}:/root/awesome_4.0.0-0~xenial0_amd64.deb .
-# sudo dpkg -i ./awesome_4.0.0-0~xenial0_amd64.deb
-# sudo apt-get -f install
