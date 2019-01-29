@@ -63,15 +63,15 @@ RUN luarocks install ldoc && \
     luarocks install lua-discount
 
 RUN cd /root && \
-    git clone -b v4.2 https://github.com/awesomeWM/awesome.git awesome-4.2/ && \
-    cd awesome-4.2 && \
+    git clone -b v4.3 https://github.com/awesomeWM/awesome.git awesome-4.3/ && \
+    cd awesome-4.3 && \
     make package
 
 RUN apt-get -y install devscripts
 COPY contents /root/awesome-deb/contents/
 COPY debian /root/awesome-deb/debian/
-RUN cd /root/awesome-4.2/ && \
-    dpkg-deb -x ./build/awesome-4.2.0.0-Linux.deb /root/wrong-deb && \
+RUN cd /root/awesome-4.3/ && \
+    dpkg-deb -x ./build/awesome-4.3.0.0-Linux.deb /root/wrong-deb && \
     cd /root/awesome-deb && \
     cp -r /root/wrong-deb/usr/local/etc/* ./contents/etc/ && \
     mkdir ./contents/usr/bin && \
